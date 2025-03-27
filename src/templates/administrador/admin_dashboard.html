@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css')}}" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+</head>
+<body>
+    
+    <div class="container">
+        <!-- Sección del menú lateral -->
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <!--<h2><span class="danger">Calzado SAS</span></h2>-->
+                    <img src="{{ url_for('static', filename='img/CALZADO SAS.jpg') }}" alt="">
+                </div>
+            </div>
+
+            <div class="sidecal">
+                <div class="name-admin">
+                    <h3>ADMINISTRADOR, {{ current_user.nombre }}</h3>
+                </div>
+                <a href="#" class="active"> 
+                    <span class="material-symbols-outlined">storefront</span>
+                    <h3>Gestión de productos</h3>
+                </a>
+                <a href="#"> 
+                    <span class="material-symbols-outlined">group</span>
+                    <h3>Gestión de Usuarios</h3>
+                </a>
+                <a href="#"> 
+                    <span class="material-symbols-outlined">shopping_cart_checkout</span>
+                    <h3>Gestión de Pedidos</h3>
+                </a>
+                <a href="#"> 
+                    <span class="material-symbols-outlined">payments</span>
+                    <h3>Gestión de Pagos</h3>
+                </a>
+                <a href="#"> 
+                    <span class="material-symbols-outlined">request_quote</span>
+                    <h3>Gestión de Facturas</h3>
+                </a>
+                <a href="{{ url_for('logout') }}" class="logout-btn">
+                    <span class="material-symbols-outlined">logout</span>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </div>
+        </aside>
+    
+        <!-- Sección principal -->
+        <main>
+            <h1>Dashboard</h1>
+            <div class="date">
+                <input type="date">
+            </div>
+
+            <div class="insights">
+                <!--start selling-->
+                <div class="sales">
+                    <span class="material-symbols-outlined">trending_up</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>total sales</h3>
+                            <h1>$25</h1>
+                        </div>
+                        <div class="pogress">
+                            <svg>
+                            <circle r="30" cy="40" cx="40"> </circle>
+                            </svg>
+                            <div class="number">80%</div>
+                        </div>
+                        <small>last 24 hours </small>
+                    </div>
+                </div>
+                <!--end selling-->
+
+                 <!--start expenses-->
+                 <div class="expenses">
+                    <span class="material-symbols-outlined">local_mall</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>total expenses</h3>
+                            <h1>$25</h1>
+                        </div>
+                        <div class="pogress">
+                            <svg>
+                            <circle r="30" cy="40" cx="40"> </circle>
+                            </svg>
+                            <div class="number">80%</div>
+                        </div>
+                        <small>last 24 hours </small>
+                    </div>
+                </div>
+                <!--end expenses-->
+
+                 <!--start expenses-->
+                 <div class="expenses">
+                    <span class="material-symbols-outlined">stacked_line_chart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>total expenses</h3>
+                            <h1>$25</h1>
+                        </div>
+                        <div class="pogress">
+                            <svg>
+                            <circle r="30" cy="40" cx="40"> </circle>
+                            </svg>
+                            <div class="number">80%</div>
+                        </div>
+                        <small>last 24 hours </small>
+                    </div>
+                </div>
+                <!--end expenses-->
+            </div>
+            <!--end inside-->
+            <!--start recent order-->
+            <div class="recent_order">
+                <h1>recent order</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+
+
+
+
+            <!--end recent order-->
+        </main>
+    
+        <!-- Sección derecha -->
+        <section class="right">
+            <h1>Right</h1>
+        </section>
+    </div>
+    
+
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+</body>
+</html>
+

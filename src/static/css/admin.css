@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    width: 100vw;
+    height: 100vh;
+    font-size: 0.88rem;
+    user-select: none;
+    overflow-x: auto;
+    background: var(--clr-color-background);
+
+}
+
+:root {
+    --clr-primary: #7380ec;
+    --clr-danger: #ff7782;
+    --clr-success: #41f1b6;
+    --clr-white: #fff;
+    --clr-info-dark: #7d8da1;
+    --clr-info-light: #dce1eb;
+    --clr-dark: #363949;
+    --clr-warning: #fffa4c;
+    --clr-light: rgba(132, 139, 200, 0.18);
+    --clr-primary-variant: #111e88;
+    --clr-dark-variant: #677483;
+    --clr-color-background: #f6f6f9;
+
+    --card-border-radius: 2rem;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 0.8rem;
+    --border-radius-3: 1.2rem;
+
+    --card-padding: 1.8rem;
+    --padding-1: 1.2rem;
+    --box-shadow: 0 2rem 3rem var(--clr-light);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: 0;
+    list-style: none;
+    appearance: none;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 18rem auto 14rem; /* Sidecal - Main - Right Panel */
+    gap: 1.8rem;
+    width: 96%;
+    margin: 0 auto;
+    height: 100vh;
+}
+
+a{
+    color: var(--clr-dark);
+
+}
+h1{
+    font-weight: 800;
+    font-size: 1.8rem;
+    color: var(--clr-dark);
+    margin: 0;
+    padding: 0;
+}
+h2{
+    font-size: 1.4rem;
+
+}
+h3{
+    font-size: 1.1rem; /* Aumenta solo el tamaño del texto en el enlace activo */
+    font-weight: 700; /* Hace que se vea más fuerte */
+}
+h4{
+    font-size: 0.8rem;
+}
+h5{
+    font-size: 0.77rem;
+}
+small{
+    font-size: 0.75rem;
+}
+
+
+.profile-photo{
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    overflow: hidden;
+
+}
+
+.text-muted{
+    color: var(--clr-info-dark);
+
+}
+p{
+    color: var(--clr-dark-variant);
+}
+b{
+    color: var(--clr-dark);
+}
+.primary{
+    color: var(--clr-primary);
+}
+.success{
+    color: var(--clr-success);
+}
+.danger{
+    color: var(--clr-danger);
+}
+.warning{
+    color: var(--clr-warning);
+}
+
+/*aside*/
+
+aside {
+    width: 21rem; /* Aumenta el ancho */
+    padding: 1.2rem; /* Espaciado interno para evitar que el texto quede pegado */
+}
+aside .top {
+    background-color: var(--clr-white);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 1.4rem;
+}
+
+.logo img {
+    max-width: 202px;
+    height: auto;
+    display: block;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+
+aside .top div.close{
+    display: none;
+}
+
+/***************
+sidecal********/
+
+aside .sidecal {
+    background-color: var(--clr-white);
+    display: flex;
+    flex-direction: column;
+    min-height: 85vh;
+}
+
+aside .h3{
+    font-weight: 500;
+}
+
+aside .sidecal a {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem; /* Espacio entre el ícono y el texto */
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem; /* Tamaño de letra adecuado */
+    white-space: nowrap; /* Evita que el texto se divida en dos líneas */
+}
+
+aside .sidecal a span{
+    font-size: 0.88rem;
+    transition: all .1s ease-in;
+    white-space: nowrap;
+}
+
+aside a span.material-symbols-outlined {
+    font-size: 1.2rem; /* Reduce el tamaño del icono */
+}
+
+aside a {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem; /* Espacio entre el ícono y el texto */
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem; /* Tamaño de letra adecuado */
+    white-space: nowrap; /* Evita que el texto se divida en dos líneas */
+}
+
+aside .sidecal a:last-child{
+    position: absolute;
+    bottom: 1rem;
+    width: 100%;
+}
+
+aside .sidecal a.active {
+    position: relative;
+    background: var(--clr-info-light);
+    color: var(--clr-primary);
+    margin-left: 0;
+    padding-left: 15px; /* Ajusta para que el ícono y texto no se desplacen demasiado */
+}
+
+/*color de la barra de la izquierda del menu*/
+
+aside .sidecal a.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 6px;
+    height: 100%;
+    background-color: var(--clr-primary);
+}
+
+/*color de la letras del sidelcal*/
+
+.name-admin {
+    padding: 3%;
+}
+
+aside .sidecal a:hover{
+    color: var(--clr-primary);
+}
+
+/*movimiento del sidecal*/
+
+aside .sidecal a:hover span{
+    margin-left: 1rem;
+    transition: .4s ease-in;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: start; /* Alinea el texto a la izquierda */
+    padding: 1rem;
+}
+
+
+

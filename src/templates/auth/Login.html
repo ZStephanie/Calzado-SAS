@@ -1,0 +1,31 @@
+{% extends './base.html' %}
+
+{% block body %}
+<body>
+    <div class="container">
+        <div class="left-side">
+            <div class="overlay"></div>
+            <img src="{{ url_for('static', filename='img/fondo.jpg') }}" alt="Calzado Elegante">
+        </div>
+        <div class="right-side">
+            <h1>CALZADO S.A.S</h1>
+            
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            
+            <form action="/login" method="POST">
+                <input type="text" name="username" placeholder="Correo electrónico" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+                <button type="submit">Ingresar</button>
+                <a href="#">¿No tienes cuenta?</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

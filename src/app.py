@@ -29,6 +29,8 @@ def load_user(id):
 def index():
     return render_template('index.html')
 
+sql="SELECT * FROM productos"
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':

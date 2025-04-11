@@ -35,19 +35,6 @@ body {
     --box-shadow: 0 2rem 3rem var(--clr-light);
 }
 
-/** Botones oscuro y claro **/
-.dark-theme-variables{
-    --clr-color-background: #181a1e;
-    --clr-white: #202528;
-    --clr-light: rgba(0, 0, 0, 0.4);
-    --clr-dark: #edeffd; 
-    --clr-dark-variant: #677483;
-    --box-shadow: 0 2rem 3rem var(--clr-light);
-}
-
-
-
-
 *{
     margin: 0;
     padding: 0;
@@ -101,8 +88,7 @@ small{
     width: 2.8rem;
     height: 2.8rem;
     border-radius: 50%;
-    overflow: hidden;
-
+    object-fit: cover;
 }
 
 .text-muted{
@@ -125,7 +111,7 @@ b{
     color: var(--clr-danger);
 }
 .warning{
-     color: var(--clr-danger);
+color: var(--clr-danger);
 }
 
 /*aside*/
@@ -155,7 +141,7 @@ aside .top {
 }
 
 
-/***************sidecal
+/***************
 sidecal********/
 
 aside .sidecal {
@@ -284,6 +270,7 @@ main .insights>div{
     margin-top: 1rem;
     box-shadow: var(--box-shadow);
     transition: all .3s ease;
+
     /* Ajustes para hacerlos más anchos y menos altos */
     width: 290px;
     height: 290px;/* Reduce la altura */
@@ -390,7 +377,7 @@ main .insights svg circle {
 
 /* Se realiza un identificador en la etiqueta del 90%  */
 circle#circle-edit {
-    stroke-dasharray: 216;
+    stroke-dasharray: 110;
 }
 
 circle#circle-2 {
@@ -467,7 +454,7 @@ main .recent_order a{
     display: none;
 }
 
-.right .theme-toggler {
+.right .theme-togger {
     background-color: var(--clr-white);
     display: flex;
     justify-content: space-between;
@@ -479,7 +466,7 @@ main .recent_order a{
    
 }
 
-.right .theme-toggler span{
+.right .theme-togger span{
     font-size: 1.2rem;
     width: 50%;
     height: 100%;
@@ -489,7 +476,7 @@ main .recent_order a{
 
 }
 
-.right .theme-toggler span.active{
+.right .theme-togger span.active{
     background-color: var(--clr-primary);
     color: #fff;
 }
@@ -592,39 +579,6 @@ main .recent_order a{
     margin-bottom: 40px;
 }
 
-aside .top div.close span{
-    display: none;
-
-}
-
- 
-.b-lista:hover {background: #0b7dda;}
-
-.b-lista {
-    border: none; 
-    color: white; 
-    padding: 14px 28px; 
-    cursor: pointer; 
-    border-radius: 5px; 
-    background-color: #007bff;  
-  }
-
-  .b-ver:hover {background: #0b7dda;}
-
-  .b-ver {
-    border: none; 
-    color: white; 
-    padding: 14px 28px; 
-    cursor: pointer; 
-    border-radius: 5px; 
-    background-color: #007bff;
-  }
-
-  .material-symbols-outlined{
-    font-size: 15px !important;
-  }
-
-
 /*****media query******/
 
 @media screen and (max-width:1200px){
@@ -647,7 +601,6 @@ aside .top div.close span{
 
 }
 
-
 /********* Media Query for phoens********/
 
 @media screen and (max-width: 768px) {
@@ -661,17 +614,7 @@ aside .top div.close span{
         position: fixed;
         width: 18rem;
         z-index: 3;
-        background: var(--clr-white);
-        display: none; 
-        left: -100px; 
-        animation: menuAni 1s forwards;
-    }
-
-    @keyframes menuAni{
-        to{
-            left: 0;
-
-        }
+        background: var(--clr-white);  
     }
 
     aside .logo h2 {
@@ -691,71 +634,11 @@ aside .top div.close span{
         display: inline;
         position: absolute;
         right: 0;
-        margin-right: 30px;
+        margin-right: -30px;
         font-size: 35px;
     }
 
     .right .top{
-        position: fixed;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 0.8rem;
-        height: 4.6rem;
-        background: var(--clr-white);
-        width: 100%;
-        z-index: 2;
-        box-shadow: 0 1rem 1rem var(--box-shadow);
-        margin: 0;
         
     }
-
-    main .insights{
-        display: grid;
-        grid-template-columns: repeat(1,1fr);
-        gap: 1.6rem;
-        padding: 40px;
-    }
-
-    main .recent_order{
-        padding: 30px;
-        margin: 0 auto;
-    }
-    .right .proofile{
-        position: absolute;
-        left: 70%;
-     }
-
-     .right .top .theme-toggler{
-        width: 4.4rem;
-        left: 50%;
-     }
-
-     .right .recent-updates{
-        padding: 30px;
-     }
-
-     .right .sales-analytics{
-        padding: 30px;
-     }
-
-     .add_products{
-        padding: 30px;
-     }
-
-     .right .top button{
-        display: inline-block;
-        background: transparent;
-        cursor: pointer;
-        color: var(--clr-dark);
-        position: absolute;
-        left: 1rem;
-     }
-
-
-     
-     
-
 }

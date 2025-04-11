@@ -1,18 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
-<body>
-    <h1>Bienvenido, {{ current_user.nombre }}</h1>
-    <a href="{{ url_for('logout') }}" class="logout-btn">Cerrar Sesión</a>
-    <br><br>
-    
-    <h1>USUARIO NORMAL</h1>
-</body>
-</html>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/usuario.css')}}" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Sección del menú lateral -->
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <!--<h2><span class="danger">Calzado SAS</span></h2>-->
+                    <img src="{{ url_for('static', filename='img/CALZADO SAS.jpg') }}" alt="">
+                </div>
+                <div class="close">
+                    <span class="material-symbols-outlined">close</span>
+                </div>
+            </div>
+
+            <div class="sidecal">
+                <div class="name-admin">
+                    <h3>Usuario, {{ current_user.nombre }}</h3>
+                </div>
+                <a href="#" class="active">
+                    <span class="material-symbols-outlined">storefront</span>
+                    <h3>Gestión de productos</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">group</span>
+                    <h3>Gestión de Usuarios</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">shopping_cart_checkout</span>
+                    <h3>Gestión de Pedidos</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">payments</span>
+                    <h3>Gestión de Pagos</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">request_quote</span>
+                    <h3>Gestión de Facturas</h3>
+                </a>
+                <a href="{{ url_for('logout') }}" class="logout-btn">
+                    <span class="material-symbols-outlined">logout</span>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Sección principal -->
+        <main>
+            <h1>Pagina de inicio</h1>
+            <div class="date">
+                <input type="date">
+            </div>
+
+            <div class="insights">
+                <!--start selling-->
+                <div class="sales">
+                    <span class="material-symbols-outlined">trending_up</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>+Articulos adquiridos</h3>
+                            <h1>2 articulos</h1>
+                        </div>
+                        <div class="progress">
+                            <svg height="70" width="80">
+                                <circle r="30" cy="40" cx="40" id="circle-edit"> </circle>
+                            </svg>
+                            <div class="number">50%</div>
+                        </div>
+                        <small>Ultimas 24 horas </small>
+                    </div>
+                </div>
+                <!--end selling-->
+
+                <!--start expenses-->
+                <div class="expenses">
+                    <span class="material-symbols-outlined">local_mall</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Productos del carrito</h3>
+                            <h1>2 productos</h1>
+                        </div>
+                        <div class="progress">
+                            <svg height="70" width="80">
+                                <circle r="30" cy="40" cx="40" id="circle-2"> </circle>
+                            </svg>
+                            <div class="number">60%</div>
+                        </div>
+                        <small>Ultimas 24 horas</small>
+                    </div>
+                </div>
+                <!--end expenses-->
+
+                <!--start expenses-->
+                <div class="income">
+                    <span class="material-symbols-outlined">stacked_line_chart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Pedidos pendientes</h3>
+                            <h1>2 articulos</h1>
+                        </div>
+                        <div class="progress">
+                            <svg height="70" width="80">
+                                <circle r="30" cy="40" cx="40" id="circle-3"> </circle>
+                            </svg>
+                            <div class="number">30%</div>
+                        </div>
+                        <small>Ultimas 24 horas </small>
+                    </div>
+                </div>
+                <!--end expenses-->
+            </div>
+            <!--end inside-->
+            <!--start recent order-->
+            <br>
+            <br>
+            <h1>Productos</h1>
+            <div class="recent_order">
+                <table class="table-main-product">
+                    <thead>
+                        <tr>
+                            <th>Nombre Producto</th>
+                            <th>Stock</th>
+                            <th>Precio</th>
+                            <th>Descripción</th>
+                            <th>Imagen</th>
+                            <th>Eliminar</th>
+                            <th>Modificar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nombre Producto</td>
+                            <td>Stock</td>
+                            <td>Precio</td>
+                            <td>Descripcion</td>
+                            <td>Imagen</td>
+                            <td class="warning">Eliminar</td>
+                            <td class="primary">Editar</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td>Nombre Producto</td>
+                            <td>Stock</td>
+                            <td>Precio</td>
+                            <td>Descripcion</td>
+                            <td>Imagen</td>
+                            <td class="warning">Eliminar</td>
+                            <td class="primary">Editar</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td>Nombre Producto</td>
+                            <td>Stock</td>
+                            <td>Precio</td>
+                            <td>Descrpcion</td>
+                            <td>Imagen</td>
+                            <td class="warning">Eliminar</td>
+                            <td class="primary">Editar</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            <!--end recent order-->
+        </main>
+
+        <!-- Sección derecha -->
+
+        <div class="right">
+            <div class="top">
+                <button id="menu_bar">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <div class="theme-togger">
+                    <span class="material-symbols-outlined active">light_mode</span>
+                    <span class="material-symbols-outlined active">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p><b>{{ current_user.nombre }}</b></p>
+                        <P>Usuario</P>
+                        <small class="text-muted"></small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="{{ url_for('static', filename='img/usuario.jpg') }}" alt="">
+                    </div>
+                </div>
+            </div>
+            <!--end top-->
+            <!--START ACTUALIZACIONES -->
+
+            <div class="recent-updates">
+                <h2>Actualizaciones recientes</h2>
+                <!--1RA LINEA-->
+                <div class="updates">
+
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="{{ url_for('static', filename='img/admin2.png') }}" alt="">
+                        </div>
+                        <div class="message">
+                            <p><b>Admin</b> Orden Pendiente</p>
+                        </div>
+                    </div>
+                    <!--2DA LINEA-->
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="{{ url_for('static', filename='img/admin2.png') }}" alt="">
+                        </div>
+                        <div class="message">
+                            <p><b>Admin</b> Orden Reciente</p>
+                        </div>
+                    </div>
+                    <!--3RA LINEA-->
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="{{ url_for('static', filename='img/admin2.png') }}" alt="">
+                        </div>
+                        <div class="message">
+                            <p><b>Admin</b> Orden Entregada</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--END ACTUALIZACIONES RECIENTES-->
+            <!--STRAT SALES ANALYSTICS-->
+            <div class="sales-analytics">
+                <h2>Sales Analytics</h2>
+                <div class="item olion">
+                    <div class="icon">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                    </div>
+                    <div class="right-text">
+                        <div class="info">
+                            <h3>Ordenes en Linea</h3>
+                            <small class="text-muted">Ultimas 2 horas</small>
+                        </div>
+                        <h5 class="danger">-20%</h5>
+                        <h3>3542</h3>
+                    </div>
+                </div>
+                <div class="item olion">
+                    <div class="icon">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                    </div>
+                    <div class="right-text">
+                        <div class="info">
+                            <h3>Ordenes en Linea</h3>
+                            <small class="text-muted">Ultimas 2 horas</small>
+                        </div>
+                        <h5 class="danger">-20%</h5>
+                        <h3>3542</h3>
+                    </div>
+                </div>
+                <div class="item olion">
+                    <div class="icon">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                    </div>
+                    <div class="right-text">
+                        <div class="info">
+                            <h3>Ordenes en Linea</h3>
+                            <small class="text-muted">Ultimas 2 horas</small>
+                        </div>
+                        <h5 class="danger">-20%</h5>
+                        <h3>3542</h3>
+                    </div>
+                </div>
+            </div>
+            <!--END SALES ANALYSTICS-->
+            <div class="item add_products">
+                <div>
+                    <span class="material-symbols-outlined">add</span>
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+
+
+
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+</body>
+
+</html>
 
 

@@ -1,0 +1,71 @@
+{% extends './base.html' %}
+{% block title %}Registrar Zapatos{% endblock %}
+
+{% block body %}
+
+
+<section>
+    <h2>
+        <a href="/" class="left" title="Volver"><i class="bi bi-arrow-left-circle"></i></a>
+        Actualizar Información del Zapato
+        <hr>
+    </h2>
+
+    {% if (dataInfo) %}
+    <form action="{{ url_for('formViewUpdate', id_producto = dataInfo.id_producto ) }}" method="POST" class="mb-3"
+        autocomplete="off" enctype="multipart/form-data">
+        <input type="text" class="form-control" name="id_producto" value="{{ dataInfo.id_producto }}" required hidden>
+
+        <div class="row">
+            <div class="col">
+                <label for="Producto">Producto</label>
+                <input type="text" name="nombre_producto" value="{{ dataInfo.nombre_producto }}" class="form-control">
+            </div>
+            <div class="col">
+                <label for="Stock">Stock</label>
+                <input type="text" name="stock" value="{{ dataInfo.stock }}" class="form-control">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="precio">Precio</label>
+                <input type="number" name="precio" value="{{ dataInfo.precio }}" class="form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="descripcion">Descripcion</label>
+                <input type="number" name="descripcion" value="{{ dataInfo.descripcion }}" class="form-control">
+            </div>
+        </div>
+
+        <div class="row">
+            {% set urlProducto = '/static/img/' %}
+            <div class="col-md-6">
+                {% if(dataInfo.imagen !="") %}
+                <img src="{{ urlProducto }}{{ dataInfo.imagen }}" class="foto_update" alt="{{ dataInfo.nombre_producto }}">
+                {% else %}
+                <img src="{{ urlProducto }}logo.jpeg" class="foto_update" alt="coche">
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <label for="foto">Cambiar Foto del Producto</label>
+                <input type="file" name="foto" class="form-control-file" accept="image/*">
+            </div>
+        </div>
+        <hr>
+        <input class="button-primary mt-3 btn btn-info btn-block bold" type="submit" value="Guardar Actualización">
+    </form>
+
+    {% else %}
+    <div class="col-12">
+        <h2 class="text-center">
+            No existe el producto
+        </h2>
+    </div>
+    {% endif %}
+
+</section>
+
+{% endblock %}

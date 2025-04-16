@@ -1,0 +1,35 @@
+{% extends './base.html' %}
+{% block body %}
+<body>
+  <div class="container">
+    <div class="left-side">
+      <div class="overlay"></div>
+      <img src="{{ url_for('static', filename='img/fondo.jpg') }}" alt="Calzado Elegante">
+    </div>
+<!--FORMULARIO SOLO PARA USUARIOS-->
+    <div class="right-side">
+      <h1>REGISTRO - CALZADO S.A.S</h1>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="alert">
+            {% for category, message in messages %}
+              <p class="{{ category }}">{{ message }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <form action="/register" method="POST">
+        <input type="number" name="cedula" placeholder="Numero de Cedula" required>
+        <input type="text" name="nombre" placeholder="Nombre completo" required>
+        <input type="email" name="correo" placeholder="Correo electrónico" required>
+        <input type="password" name="contraseña" placeholder="Contraseña" required>
+        <input type="text" name="direccion" placeholder="Dirección" required>
+        <input type="text" name="telefono" placeholder="Teléfono" required>
+        <button type="submit">Registrarse</button>
+      </form>
+    </div>
+  </div>
+</body>
+{% endblock %}

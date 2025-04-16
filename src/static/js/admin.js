@@ -23,3 +23,27 @@ themeToggler.addEventListener('click', () => {
         themeImage.src = '/static/img/CALZADO_SAS.png';
     }
 });
+
+function eliminarProductoJavaScript(id) {
+    const idR = document.querySelector('#id_' + id);
+    let nombre_imagen = idR.dataset.foto;
+  
+    let fila = document.querySelector('#Registro_' + id);
+  
+    var urlForm = "{{ url_for('formViewBorrarProducto') }}";
+    $.ajax({
+      type: "POST",
+      data: { id: id, nombre_imagen: nombre_imagen },
+      url: urlForm,
+      success: function (resp) {
+        console.log(resp);
+        if (resp == 1) {
+          fila.remove(); // Elimina la fila del DOM
+          mensajeAlerta(msg = 'Producto eliminado con éxito.', tipo = 1);
+        } else {
+          console.log('Error al intentar borrar el producto');
+        }
+      }
+    });
+  }
+  

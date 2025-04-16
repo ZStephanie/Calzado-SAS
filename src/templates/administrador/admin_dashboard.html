@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -126,7 +125,9 @@
             <br>
             <br>
             <h1>Productos</h1>
-            <a href="" class="b-lista"><span class="material-symbols-outlined">add </span>Agregar</a>
+            <a href="{{ url_for('addProducto') }}" class="b-lista"><span
+                    class="material-symbols-outlined">add</span> Agregar</a>
+
             <div class="recent_order">
                 <table class="table-main-product">
                     <thead>
@@ -136,48 +137,52 @@
                             <th>Precio</th>
                             <th>Descripción</th>
                             <th>Imagen</th>
-                            <th>Ver</th>
-                            <th>Eliminar</th>
-                            <th>Modificar</th>
+                            <th>Categoria</th>
+                            <th colspan="3">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for productos in miData %}
+                        {% with urlProductos = '/static/img/' %}
                         <tr>
-                            <td>Nombre Producto</td>
-                            <td>Stock</td>
-                            <td>Precio</td>
-                            <td>Descripcion</td>
-                            <td>Imagen</td>
-                            <td class="primary">Ver</td>
-                            <td class="warning">Eliminar</td>
-                            <td class="primary">Editar</td>
-                        </tr>
-                    </tbody>
-                    <tbody>
-                        <tr>
-                            <td>Nombre Producto</td>
-                            <td>Stock</td>
-                            <td>Precio</td>
-                            <td>Descripcion</td>
-                            <td>Imagen</td>
-                            <td class="primary">Ver</td>
-                            <td class="warning">Eliminar</td>
-                            <td class="primary">Editar</td>
-                        </tr>
-                    </tbody>
-                    <tbody>
-                        <tr>
-                            <td>Nombre Producto</td>
-                            <td>Stock</td>
-                            <td>Precio</td>
-                            <td>Descrpcion</td>
-                            <td>Imagen</td>
-                            <td class="primary">Ver</td>
-                            <td class="warning">Eliminar</td>
-                            <td class="primary">Editar</td>
-                        </tr>
-                    </tbody>
+                            <td>{{productos.nombre_producto}}</td>
+                            <td>{{productos.stock}}</td>
+                            <td>{{productos.precio}}</td>
+                            <td>{{productos.descripcion}}</td>
+                            <td>
+                                {% if(productos.imagen !="") %}
+                                <img src="{{ urlProductos }}{{ productos.imagen }}" class="sin_foto_mini"
+                                    alt="{{ productos.nombre_producto }}">
+                                {% else %}
+                                <img src="{{ urlProductos }}logo.jpeg" class="sin_foto_mini" alt="productos">
+                                {% endif %}
+                            </td>
+                            <td>{{productos.stock}}</td>
+                            <td class="primary">
+                                <a href="{{ url_for('verDetalleZapato', id_producto = productos.id_producto ) }}"
+                                    type="button" class="btn btn-warning btn-sm" tooltip="Ver Registro">
+                                    <i class="bi bi-eye"></i>
+                                    Ver
+                            </td>
+                            <td class="warning">
+                                <a href="#" id="id_{{ productos.id_producto }}" data-foto="{{ productos.imagen }}"
+                                    onclick="eliminarProductoJavaScript('{{ productos.id_producto }}');"
+                                    class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Eliminar Registro">
+                                    Eliminar
+                                </a>
 
+                            </td>
+                            <td class="primary">
+                                <a href="{{ url_for('formViewUpdate', id_producto = productos.id_producto ) }}" class="btn btn-info btn-sm"
+                                    tooltip="Actualizar Registro">
+                                    <i class="bi bi-arrow-clockwise"></i>
+                                    Editar
+                            </td>
+                        </tr>
+                        {% endwith %}
+                        {% endfor %}
+                    </tbody>
                 </table>
             </div>
             <!--end recent order-->
@@ -292,7 +297,7 @@
                 </div>
             </div>
         </div>
-        
+
 
     </div>
 

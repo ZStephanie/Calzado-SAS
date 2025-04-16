@@ -98,11 +98,16 @@ small{
 
 
 .profile-photo img {
-    width: 2.8rem;
-    height: 2.8rem;
+    width: 3.6rem;
+    height: 3.6rem;
+    object-fit: cover; /* Esto mantiene la proporción y recorta si es necesario */
     border-radius: 50%;
     overflow: hidden;
+}
 
+img.sin_foto_mini {
+    height: 6em;
+    width: 6em;
 }
 
 .text-muted{

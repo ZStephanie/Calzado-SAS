@@ -1,154 +1,117 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from random import sample
-from config import config
-import mysql.connector
+from app import mysql
+import MySQLdb.cursors
 
+# ===============================
+# FUNCIONES DE PRODUCTOS
+# ===============================
 
+# Obtener todos los zapatos (con categoría)
 def listaZapatos():
-    db_config = config['development'] #creando mi instancia a la conexion de BD
-    
-    conexion_MySQLdb = mysql.connector.connect(
-        host=db_config.MYSQL_HOST,
-        user=db_config.MYSQL_USER,
-        password=db_config.MYSQL_PASSWORD,
-        database=db_config.MYSQL_DB
-    )
-
-    cur = conexion_MySQLdb.cursor(dictionary=True)
-
-    querySQL = "SELECT * FROM Productos ORDER BY id_producto DESC;" #Consulta SQL para obtener todos los productos
-    cur.execute(querySQL) 
-    resultadoBusqueda = cur.fetchall() #fetchall () Obtener todos los registros
-    totalBusqueda = len(resultadoBusqueda) #Total de busqueda
-    
-    cur.close() #Cerrando conexion SQL
-    conexion_MySQLdb.close() #cerrando conexion de la BD    
-    return resultadoBusqueda
-
-def updateZapatos(id=''):
-        db_config = config['development'] #creando mi instancia a la conexion de BD
-        
-
-        conexion_MySQLdb = mysql.connector.connect(
-            host=db_config.MYSQL_HOST,
-            user=db_config.MYSQL_USER,
-            password=db_config.MYSQL_PASSWORD,
-            database=db_config.MYSQL_DB
-        )
-        cur = conexion_MySQLdb.cursor(dictionary=True)
-        cur.execute("SELECT * FROM productos WHERE id_producto = %s LIMIT 1", [id])
-        resultQueryData = cur.fetchone() #Devolviendo solo 1 registro
-        return resultQueryData
-
-def registrarZapatos(id_producto, nombre_producto='', stock='', precio='', descripcion='', imagen='', id_categoria=''):
-    db_config = config['development']  # Instancia de configuración
-
-    conexion_MySQLdb = mysql.connector.connect(
-        host=db_config.MYSQL_HOST,
-        user=db_config.MYSQL_USER,
-        password=db_config.MYSQL_PASSWORD,
-        database=db_config.MYSQL_DB
-    )
-    
-    cursor = conexion_MySQLdb.cursor(dictionary=True)
-
-    sql = """
-        INSERT INTO productos
-        (id_producto, nombre_producto, stock, precio, descripcion, imagen, id_categoria)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
-    """
-    valores = (id_producto, nombre_producto, stock, precio, descripcion, imagen, id_categoria)
-    
-    cursor.execute(sql, valores)
-    conexion_MySQLdb.commit()
-
-    resultado_insert = cursor.rowcount  # 1 si se insertó, 0 si no
-    ultimo_id = cursor.lastrowid        # ID del último insertado
-
-    cursor.close()
-    conexion_MySQLdb.close()
-
-    return resultado_insert
-
-
-def detallesZapatos(id_producto):
-        db_config = config['development'] #creando mi instancia a la conexion de BD
-        
-        conexion_MySQLdb = mysql.connector.connect(
-            host=db_config.MYSQL_HOST,
-            user=db_config.MYSQL_USER,
-            password=db_config.MYSQL_PASSWORD,
-            database=db_config.MYSQL_DB
-        )
-        cursor = conexion_MySQLdb.cursor(dictionary=True)
-        
-        cursor.execute("SELECT * FROM productos WHERE id_producto ='%s'" % (id_producto,))
-        resultadoQuery = cursor.fetchone()
-        cursor.close() #cerrando conexion de la consulta sql
-        conexion_MySQLdb.close() #cerrando conexion de la BD
-        
-        return resultadoQuery
-
-def recibeActualizarZapatos(id_producto, nombre_producto, stock, precio, descripcion, imagen, id_categoria):
     try:
-        # Conectarse a la base de datos
-        db_config = config['development']
-        conexion_MySQLdb = mysql.connector.connect(
-            host=db_config.MYSQL_HOST,
-            user=db_config.MYSQL_USER,
-            password=db_config.MYSQL_PASSWORD,
-            database=db_config.MYSQL_DB
-        )
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("""
+            SELECT p.id_producto, p.nombre_producto, p.stock, p.precio, p.descripcion, 
+            p.imagen, c.descripcion_categoria
+            FROM productos p
+            JOIN categoria c ON p.id_categoria = c.id_categoria;
+        """)
+        zapatos = cursor.fetchall()
+        cursor.close()
+        return zapatos
+    except Exception as e:
+        print(f"Error en listaZapatos: {e}")
+        return []
 
-        cur = conexion_MySQLdb.cursor()
+# Obtener zapatos por categoría
+def listaZapatosPorCategoria(id_categoria):
+    try:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("""
+            SELECT * FROM productos
+            WHERE id_categoria = %s
+            ORDER BY id_producto DESC
+        """, (id_categoria,))
+        resultado = cursor.fetchall()
+        cursor.close()
+        return resultado
+    except Exception as e:
+        print(f"Error en listaZapatosPorCategoria: {e}")
+        return []
 
-        # Consulta base de actualización
-        query = """
+# Obtener un zapato por su ID
+def getZapatoById(id_producto):
+    try:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("SELECT * FROM productos WHERE id_producto = %s LIMIT 1", (id_producto,))
+        zapato = cursor.fetchone()
+        cursor.close()
+        return zapato
+    except Exception as e:
+        print(f"Error en getZapatoById: {e}")
+        return None
+
+
+# Registrar un nuevo zapato
+def registrarZapatos(nombre_producto, stock, precio, descripcion, imagen, id_categoria):
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute("""
+            INSERT INTO productos (nombre_producto, stock, precio, descripcion, imagen, id_categoria)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, (nombre_producto, stock, precio, descripcion, imagen, id_categoria))
+        mysql.connection.commit()
+        resultado = cursor.rowcount
+        cursor.close()
+        return resultado
+    except Exception as e:
+        print(f"Error en registrarZapatos: {e}")
+        return 0
+
+# Actualizar un zapato existente
+def actualizarZapatos(id_producto, nombre_producto, stock, precio, descripcion, imagen, id_categoria):
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute("""
             UPDATE productos
-            SET 
-                nombre_producto = %s,
+            SET nombre_producto = %s,
                 stock = %s,
                 precio = %s,
                 descripcion = %s,
                 imagen = %s,
                 id_categoria = %s
             WHERE id_producto = %s
-        """
-
-        params = (
-            nombre_producto,
-            stock,
-            precio,
-            descripcion,
-            imagen,
-            id_categoria,
-            id_producto
-        )
-
-        # Ejecutar la actualización
-        cur.execute(query, params)
-        conexion_MySQLdb.commit()
-
-        filas_afectadas = cur.rowcount
-
-        cur.close()
-        conexion_MySQLdb.close()
-
+        """, (nombre_producto, stock, precio, descripcion, imagen, id_categoria, id_producto))
+        mysql.connection.commit()
+        filas_afectadas = cursor.rowcount
+        cursor.close()
         return filas_afectadas
-
     except Exception as e:
-        print(f"Ocurrió un error en recibeActualizarZapatos: {e}")
+        print(f"Error en actualizarZapatos: {e}")
         return 0
-#eliminar
 
+# ===============================
+# FUNCIONES AUXILIARES
+# ===============================
 
-#Crear un string aleatorio para renombrar la foto 
-# y evitar que exista una foto con el mismo nombre
+# Obtener todas las categorías
+def obtenerCategorias():
+    try:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("SELECT id_categoria, nombre_categoria FROM categoria")
+        categorias = cursor.fetchall()
+        cursor.close()
+        return categorias
+    except Exception as e:
+        print(f"Error al obtener categorias: {e}")
+        return []
+
+# Generar string aleatorio para nombres de archivos
 def stringAleatorio():
-    string_aleatorio = "0123456789abcdefghijklmnopqrstuvwxyz_"
-    longitud         = 20
-    secuencia        = string_aleatorio.upper()
-    resultado_aleatorio  = sample(secuencia, longitud)
-    string_aleatorio     = "".join(resultado_aleatorio)
-    return string_aleatorio
+    caracteres = "0123456789abcdefghijklmnopqrstuvwxyz_"
+    longitud = 20
+    secuencia = caracteres.upper()
+    resultado = sample(secuencia, longitud)
+    return "".join(resultado)

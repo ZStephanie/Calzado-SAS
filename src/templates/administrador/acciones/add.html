@@ -40,10 +40,10 @@
 
             <div class="mb-3">
                 <label for="id_categoria">Categoría</label>
-                <select name="id_categoria" id="id_categoria" required>
+                <select name="id_categoria" id="id_categoria" class="form-select" required>
                     <option value="">Selecciona una categoría</option>
                     {% for categoria in categorias %}
-                      <option value="{{ categoria.id_categoria }}">{{ categoria.nombre_categoria }}</option>
+                    <option value="{{ categoria[0] }}">{{ categoria[1] }}</option>
                     {% endfor %}
                 </select>
             </div>

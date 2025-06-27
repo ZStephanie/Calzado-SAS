@@ -4,20 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Panel de Usuario</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/usuario.css')}}" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-
 </head>
 
 <body>
 
     <div class="container">
-        <!-- Sección del menú lateral -->
+        <!-- Menú lateral -->
         <aside>
             <div class="top">
                 <div class="logo">
-                    <!--<h2><span class="danger">Calzado SAS</span></h2>-->
                     <img src="{{ url_for('static', filename='img/CALZADO SAS.jpg') }}" alt="">
                 </div>
                 <div class="close">
@@ -26,28 +24,20 @@
             </div>
 
             <div class="sidecal">
-                <div class="name-admin">
-                    <h3>Usuario, {{ current_user.nombre }}</h3>
+                <div class="name-usuario">
+                    <h3>Bienvenido, {{ current_user.nombre }}</h3>
                 </div>
                 <a href="#" class="active">
-                    <span class="material-symbols-outlined">storefront</span>
-                    <h3>Gestión de productos</h3>
+                    <span class="material-symbols-outlined">shopping_cart</span>
+                    <h3>Carrito de Compras</h3>
                 </a>
                 <a href="#">
-                    <span class="material-symbols-outlined">group</span>
-                    <h3>Gestión de Usuarios</h3>
+                    <span class="material-symbols-outlined">credit_card</span>
+                    <h3>Proceso de Compra</h3>
                 </a>
                 <a href="#">
-                    <span class="material-symbols-outlined">shopping_cart_checkout</span>
+                    <span class="material-symbols-outlined">local_shipping</span>
                     <h3>Gestión de Pedidos</h3>
-                </a>
-                <a href="#">
-                    <span class="material-symbols-outlined">payments</span>
-                    <h3>Gestión de Pagos</h3>
-                </a>
-                <a href="#">
-                    <span class="material-symbols-outlined">request_quote</span>
-                    <h3>Gestión de Facturas</h3>
                 </a>
                 <a href="{{ url_for('logout') }}" class="logout-btn">
                     <span class="material-symbols-outlined">logout</span>
@@ -56,39 +46,20 @@
             </div>
         </aside>
 
-        <!-- Sección principal -->
+        <!-- Contenido principal -->
         <main>
-            <h1>Pagina de inicio</h1>
+            <h1>Resumen de Actividad</h1>
             <div class="date">
                 <input type="date">
             </div>
 
             <div class="insights">
-                <!--start selling-->
-                <div class="sales">
-                    <span class="material-symbols-outlined">trending_up</span>
-                    <div class="middle">
-                        <div class="left">
-                            <h3>+Articulos adquiridos</h3>
-                            <h1>2 articulos</h1>
-                        </div>
-                        <div class="progress">
-                            <svg height="70" width="80">
-                                <circle r="30" cy="40" cx="40" id="circle-edit"> </circle>
-                            </svg>
-                            <div class="number">50%</div>
-                        </div>
-                        <small>Ultimas 24 horas </small>
-                    </div>
-                </div>
-                <!--end selling-->
-
-                <!--start expenses-->
+                <!-- Productos en carrito -->
                 <div class="expenses">
                     <span class="material-symbols-outlined">local_mall</span>
                     <div class="middle">
                         <div class="left">
-                            <h3>Productos del carrito</h3>
+                            <h3>Productos en Carrito</h3>
                             <h1>2 productos</h1>
                         </div>
                         <div class="progress">
@@ -97,89 +68,84 @@
                             </svg>
                             <div class="number">60%</div>
                         </div>
-                        <small>Ultimas 24 horas</small>
+                        <small>Últimas 24 horas</small>
                     </div>
                 </div>
-                <!--end expenses-->
 
-                <!--start expenses-->
-                <div class="income">
-                    <span class="material-symbols-outlined">stacked_line_chart</span>
+                <!-- Pedidos confirmados -->
+                <div class="sales">
+                    <span class="material-symbols-outlined">task_alt</span>
                     <div class="middle">
                         <div class="left">
-                            <h3>Pedidos pendientes</h3>
-                            <h1>2 articulos</h1>
+                            <h3>Pedidos Confirmados</h3>
+                            <h1>1 pedido</h1>
+                        </div>
+                        <div class="progress">
+                            <svg height="70" width="80">
+                                <circle r="30" cy="40" cx="40" id="circle-edit"> </circle>
+                            </svg>
+                            <div class="number">40%</div>
+                        </div>
+                        <small>Últimas 24 horas</small>
+                    </div>
+                </div>
+
+                <!-- Pedidos pendientes -->
+                <div class="income">
+                    <span class="material-symbols-outlined">pending_actions</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Pedidos Pendientes</h3>
+                            <h1>2 pedidos</h1>
                         </div>
                         <div class="progress">
                             <svg height="70" width="80">
                                 <circle r="30" cy="40" cx="40" id="circle-3"> </circle>
                             </svg>
-                            <div class="number">30%</div>
+                            <div class="number">70%</div>
                         </div>
-                        <small>Ultimas 24 horas </small>
+                        <small>Últimas 24 horas</small>
                     </div>
                 </div>
-                <!--end expenses-->
             </div>
-            <!--end inside-->
-            <!--start recent order-->
-            <br>
-            <br>
-            <h1>Productos</h1>
+
+            <br><br>
+            <h1>Historial de Pedidos</h1>
             <div class="recent_order">
                 <table class="table-main-product">
                     <thead>
                         <tr>
-                            <th>Nombre Producto</th>
-                            <th>Stock</th>
-                            <th>Precio</th>
-                            <th>Descripción</th>
-                            <th>Imagen</th>
-                            <th>Eliminar</th>
-                            <th>Modificar</th>
+                            <th>ID Pedido</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Total</th>
+                            <th>Ver Detalles</th>
+                            <th>Rastrear</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Nombre Producto</td>
-                            <td>Stock</td>
-                            <td>Precio</td>
-                            <td>Descripcion</td>
-                            <td>Imagen</td>
-                            <td class="warning">Eliminar</td>
-                            <td class="primary">Editar</td>
+                            <td>#001</td>
+                            <td>2025-04-15</td>
+                            <td>En camino</td>
+                            <td>$150.000</td>
+                            <td class="primary">Ver</td>
+                            <td class="warning">Rastrear</td>
                         </tr>
-                    </tbody>
-                    <tbody>
                         <tr>
-                            <td>Nombre Producto</td>
-                            <td>Stock</td>
-                            <td>Precio</td>
-                            <td>Descripcion</td>
-                            <td>Imagen</td>
-                            <td class="warning">Eliminar</td>
-                            <td class="primary">Editar</td>
+                            <td>#002</td>
+                            <td>2025-04-10</td>
+                            <td>Entregado</td>
+                            <td>$220.000</td>
+                            <td class="primary">Ver</td>
+                            <td class="warning">Rastrear</td>
                         </tr>
                     </tbody>
-                    <tbody>
-                        <tr>
-                            <td>Nombre Producto</td>
-                            <td>Stock</td>
-                            <td>Precio</td>
-                            <td>Descrpcion</td>
-                            <td>Imagen</td>
-                            <td class="warning">Eliminar</td>
-                            <td class="primary">Editar</td>
-                        </tr>
-                    </tbody>
-
                 </table>
             </div>
-            <!--end recent order-->
         </main>
 
-        <!-- Sección derecha -->
-
+        <!-- Panel derecho -->
         <div class="right">
             <div class="top">
                 <button id="menu_bar">
@@ -192,110 +158,85 @@
                 <div class="profile">
                     <div class="info">
                         <p><b>{{ current_user.nombre }}</b></p>
-                        <P>Usuario</P>
-                        <small class="text-muted"></small>
+                        <p>Usuario</p>
                     </div>
                     <div class="profile-photo">
                         <img src="{{ url_for('static', filename='img/usuario.jpg') }}" alt="">
                     </div>
                 </div>
             </div>
-            <!--end top-->
-            <!--START ACTUALIZACIONES -->
 
+            <!-- Actualizaciones recientes -->
             <div class="recent-updates">
                 <h2>Actualizaciones recientes</h2>
-                <!--1RA LINEA-->
                 <div class="updates">
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="{{ url_for('static', filename='img/admin2.png') }}" alt="">
+                        </div>
+                        <div class="message">
+                            <p><b>Usuario</b> Tu pedido fue confirmado</p>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="{{ url_for('static', filename='img/admin2.png') }}" alt="">
+                        </div>
+                        <div class="message">
+                            <p><b>Usuario</b> Tu pedido fue enviado</p>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="{{ url_for('static', filename='img/admin2.png') }}" alt="">
+                        </div>
+                        <div class="message">
+                            <p><b>Usuario</b> Pedido entregado exitosamente</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                    <div class="update">
-                        <div class="profile-photo">
-                            <img src="{{ url_for('static', filename='img/admin2.png') }}" alt="">
-                        </div>
-                        <div class="message">
-                            <p><b>Admin</b> Orden Pendiente</p>
-                        </div>
-                    </div>
-                    <!--2DA LINEA-->
-                    <div class="update">
-                        <div class="profile-photo">
-                            <img src="{{ url_for('static', filename='img/admin2.png') }}" alt="">
-                        </div>
-                        <div class="message">
-                            <p><b>Admin</b> Orden Reciente</p>
-                        </div>
-                    </div>
-                    <!--3RA LINEA-->
-                    <div class="update">
-                        <div class="profile-photo">
-                            <img src="{{ url_for('static', filename='img/admin2.png') }}" alt="">
-                        </div>
-                        <div class="message">
-                            <p><b>Admin</b> Orden Entregada</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--END ACTUALIZACIONES RECIENTES-->
-            <!--STRAT SALES ANALYSTICS-->
+            <!-- Análisis de pedidos -->
             <div class="sales-analytics">
-                <h2>Sales Analytics</h2>
+                <h2>Análisis de Compras</h2>
                 <div class="item olion">
                     <div class="icon">
                         <span class="material-symbols-outlined">shopping_cart</span>
                     </div>
                     <div class="right-text">
                         <div class="info">
-                            <h3>Ordenes en Linea</h3>
-                            <small class="text-muted">Ultimas 2 horas</small>
+                            <h3>Pedidos en línea</h3>
+                            <small class="text-muted">Últimas 2 horas</small>
                         </div>
-                        <h5 class="danger">-20%</h5>
-                        <h3>3542</h3>
+                        <h5 class="danger">+15%</h5>
+                        <h3>5</h3>
                     </div>
                 </div>
                 <div class="item olion">
                     <div class="icon">
-                        <span class="material-symbols-outlined">shopping_cart</span>
+                        <span class="material-symbols-outlined">percent</span>
                     </div>
                     <div class="right-text">
                         <div class="info">
-                            <h3>Ordenes en Linea</h3>
-                            <small class="text-muted">Ultimas 2 horas</small>
+                            <h3>Cupones usados</h3>
+                            <small class="text-muted">Últimos 7 días</small>
                         </div>
-                        <h5 class="danger">-20%</h5>
-                        <h3>3542</h3>
-                    </div>
-                </div>
-                <div class="item olion">
-                    <div class="icon">
-                        <span class="material-symbols-outlined">shopping_cart</span>
-                    </div>
-                    <div class="right-text">
-                        <div class="info">
-                            <h3>Ordenes en Linea</h3>
-                            <small class="text-muted">Ultimas 2 horas</small>
-                        </div>
-                        <h5 class="danger">-20%</h5>
-                        <h3>3542</h3>
+                        <h5 class="success">+10%</h5>
+                        <h3>3</h3>
                     </div>
                 </div>
             </div>
-            <!--END SALES ANALYSTICS-->
+
             <div class="item add_products">
                 <div>
                     <span class="material-symbols-outlined">add</span>
                 </div>
             </div>
         </div>
-        
-
     </div>
 
-
-
-    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/usuario.js') }}"></script>
 </body>
 
 </html>
-
-

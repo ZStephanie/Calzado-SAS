@@ -205,7 +205,6 @@ aside a {
 aside .sidecal a:last-child{
     position: absolute;
     bottom: 1rem;
-    width: 100%;
 }
 
 aside .sidecal a.active {
@@ -764,3 +763,53 @@ aside .top div.close span{
      
 
 }
+
+/* === CAMBIOS PARA MEJORAR LA RESPONSIVIDAD EN MÓVILES === */
+
+@media screen and (max-width: 768px) {
+
+    /* Scroll horizontal para la tabla */
+    .table-container {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    .table-main-product {
+        min-width: 700px;
+    }
+
+    /* Ajustes generales de secciones */
+    main,
+    .insights,
+    .recent_order,
+    .products-section {
+        width: 100% !important;
+    }
+
+    .products-section h1,
+    .products-section a {
+        text-align: center;
+    }
+
+    /* Botón de agregar producto */
+    .b-lista {
+        width: 100%;
+        font-size: 1rem;
+        padding: 10px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    /* Tamaño del ícono */
+    .material-symbols-outlined {
+        font-size: 18px !important;
+    }
+}
+
+/* CORRECCIÓN DE SINTAXIS */
+main .date {
+    padding: 0.5rem 1.6rem;
+}
+    

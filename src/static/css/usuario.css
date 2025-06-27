@@ -35,6 +35,19 @@ body {
     --box-shadow: 0 2rem 3rem var(--clr-light);
 }
 
+/** Botones oscuro y claro **/
+.dark-theme-variables{
+    --clr-color-background: #181a1e;
+    --clr-white: #202528;
+    --clr-light: rgba(0, 0, 0, 0.4);
+    --clr-dark: #edeffd; 
+    --clr-dark-variant: #677483;
+    --box-shadow: 0 2rem 3rem var(--clr-light);
+}
+
+
+
+
 *{
     margin: 0;
     padding: 0;
@@ -85,10 +98,16 @@ small{
 
 
 .profile-photo img {
-    width: 2.8rem;
-    height: 2.8rem;
+    width: 3.6rem;
+    height: 3.6rem;
+    object-fit: cover; /* Esto mantiene la proporción y recorta si es necesario */
     border-radius: 50%;
-    object-fit: cover;
+    overflow: hidden;
+}
+
+img.sin_foto_mini {
+    height: 6em;
+    width: 6em;
 }
 
 .text-muted{
@@ -111,7 +130,7 @@ b{
     color: var(--clr-danger);
 }
 .warning{
-color: var(--clr-danger);
+     color: var(--clr-danger);
 }
 
 /*aside*/
@@ -141,7 +160,7 @@ aside .top {
 }
 
 
-/***************
+/***************sidecal
 sidecal********/
 
 aside .sidecal {
@@ -211,7 +230,7 @@ aside .sidecal a.active::before {
 
 /*color de la letras del sidelcal*/
 
-.name-admin {
+.name-usuario {
     padding: 3%;
 }
 
@@ -270,7 +289,6 @@ main .insights>div{
     margin-top: 1rem;
     box-shadow: var(--box-shadow);
     transition: all .3s ease;
-
     /* Ajustes para hacerlos más anchos y menos altos */
     width: 290px;
     height: 290px;/* Reduce la altura */
@@ -377,7 +395,7 @@ main .insights svg circle {
 
 /* Se realiza un identificador en la etiqueta del 90%  */
 circle#circle-edit {
-    stroke-dasharray: 110;
+    stroke-dasharray: 216;
 }
 
 circle#circle-2 {
@@ -454,7 +472,7 @@ main .recent_order a{
     display: none;
 }
 
-.right .theme-togger {
+.right .theme-toggler {
     background-color: var(--clr-white);
     display: flex;
     justify-content: space-between;
@@ -466,7 +484,7 @@ main .recent_order a{
    
 }
 
-.right .theme-togger span{
+.right .theme-toggler span{
     font-size: 1.2rem;
     width: 50%;
     height: 100%;
@@ -476,7 +494,7 @@ main .recent_order a{
 
 }
 
-.right .theme-togger span.active{
+.right .theme-toggler span.active{
     background-color: var(--clr-primary);
     color: #fff;
 }
@@ -579,6 +597,39 @@ main .recent_order a{
     margin-bottom: 40px;
 }
 
+aside .top div.close span{
+    display: none;
+
+}
+
+ 
+.b-lista:hover {background: #0b7dda;}
+
+.b-lista {
+    border: none; 
+    color: white; 
+    padding: 14px 28px; 
+    cursor: pointer; 
+    border-radius: 5px; 
+    background-color: #007bff;  
+  }
+
+  .b-ver:hover {background: #0b7dda;}
+
+  .b-ver {
+    border: none; 
+    color: white; 
+    padding: 14px 28px; 
+    cursor: pointer; 
+    border-radius: 5px; 
+    background-color: #007bff;
+  }
+
+  .material-symbols-outlined{
+    font-size: 15px !important;
+  }
+
+
 /*****media query******/
 
 @media screen and (max-width:1200px){
@@ -601,6 +652,7 @@ main .recent_order a{
 
 }
 
+
 /********* Media Query for phoens********/
 
 @media screen and (max-width: 768px) {
@@ -614,7 +666,17 @@ main .recent_order a{
         position: fixed;
         width: 18rem;
         z-index: 3;
-        background: var(--clr-white);  
+        background: var(--clr-white);
+        display: none; 
+        left: -100px; 
+        animation: menuAni 1s forwards;
+    }
+
+    @keyframes menuAni{
+        to{
+            left: 0;
+
+        }
     }
 
     aside .logo h2 {
@@ -634,11 +696,71 @@ main .recent_order a{
         display: inline;
         position: absolute;
         right: 0;
-        margin-right: -30px;
+        margin-right: 30px;
         font-size: 35px;
     }
 
     .right .top{
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 0.8rem;
+        height: 4.6rem;
+        background: var(--clr-white);
+        width: 100%;
+        z-index: 2;
+        box-shadow: 0 1rem 1rem var(--box-shadow);
+        margin: 0;
         
     }
+
+    main .insights{
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        gap: 1.6rem;
+        padding: 40px;
+    }
+
+    main .recent_order{
+        padding: 30px;
+        margin: 0 auto;
+    }
+    .right .proofile{
+        position: absolute;
+        left: 70%;
+     }
+
+     .right .top .theme-toggler{
+        width: 4.4rem;
+        left: 50%;
+     }
+
+     .right .recent-updates{
+        padding: 30px;
+     }
+
+     .right .sales-analytics{
+        padding: 30px;
+     }
+
+     .add_products{
+        padding: 30px;
+     }
+
+     .right .top button{
+        display: inline-block;
+        background: transparent;
+        cursor: pointer;
+        color: var(--clr-dark);
+        position: absolute;
+        left: 1rem;
+     }
+
+
+     
+     
+
 }

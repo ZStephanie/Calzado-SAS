@@ -1,8 +1,7 @@
 {% extends './base.html' %}
-{% block title %}Registrar Zapatos{% endblock %}
+{% block title %}Detalles del Zapato{% endblock %}
 
 {% block body %}
-
 <section>
     <h2>
         <a href="/" class="left" title="Volver"><i class="bi bi-arrow-left-circle"></i></a>
@@ -10,40 +9,35 @@
         <hr>
     </h2>
 
-    {% if (infoZapatos) %}
-    
-  
+    {% if zapato %}
     <div class="card" style="width: 25rem;">
-      {% set urlZapatos = '/static/img/' %}
-        {% if(infoZapatos.img) %}
-          <img src="{{ urlZapatos }}{{ infoZapatos.imagen }}" class="card-img-top" alt="Zapato">
+        {% set urlZapatos = '/static/img/' %}
+        {% if zapato.imagen %}
+            <img src="{{ urlZapatos }}{{ zapato.imagen }}" class="card-img-top" alt="Zapato">
         {% else %}
-          <img src="{{ urlZapatos }}logo.jpeg" class="card-img-top sin_foto" alt="Zapato">
+            <img src="{{ urlZapatos }}logo.jpeg" class="card-img-top sin_foto" alt="Zapato">
         {% endif %}
 
         <div class="card-body">
-          <h5 class="card-title"> <strong>{{ infoZapatos.nombre_producto }}</strong></h5>
+            <h5 class="card-title"><strong>{{ zapato.nombre_producto }}</strong></h5>
         </div>
 
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">id producto: <strong>{{ infoZapatos.id_producto }}</strong></li>
-          <li class="list-group-item">Nombre producto: <strong>{{ infoZapatos.nombre_producto }}</strong></li>
-          <li class="list-group-item">Stock: <strong>{{ infoZapatos.stock }}</strong></li>
-          <li class="list-group-item">Precio: <strong>{{ infoZapatos.precio }}</strong></li>
-          <li class="list-group-item">Descripcion: <strong>{{ infoZapatos.descripcion }}</strong></li>
-          <li class="list-group-item">Imagen: <strong>{{ infoZapatos.imagen }}</strong></li>
-          <li class="list-group-item">Categoria: <strong>{{ infoZapatos.id_categoria }}</strong></li>
+            <li class="list-group-item">ID producto: <strong>{{ zapato.id_producto }}</strong></li>
+            <li class="list-group-item">Nombre producto: <strong>{{ zapato.nombre_producto }}</strong></li>
+            <li class="list-group-item">Stock: <strong>{{ zapato.stock }}</strong></li>
+            <li class="list-group-item">Precio: <strong>{{ zapato.precio }}</strong></li>
+            <li class="list-group-item">Descripción: <strong>{{ zapato.descripcion }}</strong></li>
+            <li class="list-group-item">Imagen: <strong>{{ zapato.imagen }}</strong></li>
+            <li class="list-group-item">Categoría: <strong>{{ zapato.id_categoria }}</strong></li>
         </ul>
-      </div>
-
-      {% else %}
-      <div class="col-12">
-          <h2 class="text-center">
-              No existe el Zapato
-          </h2>
-      </div>
-{% endif %}
-
+    </div>
+    {% else %}
+    <div class="col-12">
+        <h2 class="text-center">
+            No existe el Zapato
+        </h2>
+    </div>
+    {% endif %}
 </section>
-
 {% endblock %}

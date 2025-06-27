@@ -1,3 +1,6 @@
+from flask import Flask
+from flask_mysqldb import MySQL
+
 class Config:
     SECRET_KEY = 'B!1w8NAt1T^%kvhUI*S^'
 

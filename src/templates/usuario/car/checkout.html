@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmación de Pedido - Calzado SAS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/checkout.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <header>
+        {% include 'usuario/car/banner.html' %}
+    </header>
+
+    <main class="checkout-container">
+        <div class="checkout-card">
+            <h2 class="checkout-title">✅ Confirmación de Pedido</h2>
+
+            <h3 class="resumen-titulo">Resumen de Productos</h3>
+            <ul class="lista-resumen">
+                {% for id, item in carrito.items() %}
+                <li>{{ item.nombre }} x{{ item.cantidad }} — ${{ item.precio * item.cantidad }}</li>
+                {% endfor %}
+            </ul>
+
+            <p class="resumen-total"><strong>Total a pagar: ${{ total }}</strong></p>
+
+            <form method="POST" action="{{ url_for('procesar_pago') }}" class="form-checkout">
+                <div class="form-group">
+                    <label for="cliente_nombre">Nombre Completo:</label>
+                    <input type="text" id="cliente_nombre" name="cliente_nombre" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cliente_direccion">Dirección de Envío:</label>
+                    <input type="text" id="cliente_direccion" name="cliente_direccion" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cliente_email">Correo Electrónico:</label>
+                    <input type="email" id="cliente_email" name="cliente_email" class="form-input" required>
+                </div>
+
+                <button type="submit" class="btn success">💳 Pagar Ahora</button>
+            </form>
+        </div>
+    </main>
+
+    {% include 'usuario/car/footer.html' %}
+</body>
+</html>

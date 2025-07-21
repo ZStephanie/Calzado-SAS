@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+
+{% include 'usuario/car/header.html' %}
+
+<body>
+    {% include 'usuario/car/banner.html' %}
+    <div class="carrito-container">
+        <h1 class="carrito-title">🛒 Tu Carrito</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% if carrito %}
+        <table class="carrito-table">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set total = 0 %}
+                {% for id, item in carrito.items() %}
+                <tr>
+                    <td><img src="{{ url_for('static', filename='img/' + item.imagen) }}" alt="{{ item.nombre }}"
+                            class="carrito-img"></td>
+                    <td>{{ item.nombre }}</td>
+                    <td>$ {{ item.precio }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('actualizar_carrito') }}">
+                            <input type="hidden" name="id_producto" value="{{ id }}">
+                            <input type="number" name="cantidad" value="{{ item.cantidad }}" min="1"
+                                class="input-cantidad">
+                            <button type="submit" class="btn actualizar">✔️</button>
+                        </form>
+
+                    </td>
+                    <td>
+                        {% set subtotal = item.precio * item.cantidad %}
+                        $ {{ subtotal }}
+                        {% set total = total + subtotal %}
+                    </td>
+                    <td>
+                        <form method="POST" action="{{ url_for('eliminar_producto', id_producto=id) }}">
+                            <button type="submit" class="btn eliminar">🗑️</button>
+                        </form>
+                    </td>
+                    <td>
+                        $ {{ subtotal }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="acciones-finales">
+            <a href="{{ url_for('index_usuario') }}" class="btn">Seguir Comprando</a>
+            <form method="POST" action="{{ url_for('vaciar_carrito') }}" class="form-inline">
+                <button type="submit" class="btn danger">Vaciar Carrito</button>
+            </form>
+            <a href="{{ url_for('checkout') }}" class="btn success">Finalizar Compra</a>
+        </div>
+        {% else %}
+        <p>Tu carrito está vacío.</p><br>
+        <a href="{{ url_for('index_usuario') }}" class="btn">Explorar productos</a>
+        {% endif %}
+    </div>
+    {% include 'usuario/car/footer.html' %}
+
+</body>
+
+</html>

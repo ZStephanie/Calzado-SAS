@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calzado SAS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}" />
+    <link rel="icon" href="{{ url_for('static', filename='img/zapato.png') }}" type="img/CALZADO">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <header>
+        <div class="container-hero">
+            <div class="container hero">
+                <div class="customer support">
+                    <i class="fa-solid fa-headset"></i>
+                    <div class="content-customer-support">
+                        <span class="text">Soporte al Cliente</span>
+                        <span class="subrayado"><u>601-420-214</u></span>
+                    </div>
+                </div>
+                <div class="container-logo">
+                    <h1 class="logo"><a href="/">Calzado SAS</a></h1>
+                </div>
+                <div class="container-user">
+                    <a href="{{ url_for('usuario_dashboard') }}"> <i class="fa-solid fa-user"></i></a>
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <span class="text">Carrito de Compras</span>
+                </div>
+            </div>
+        </div>
+        <div class="container-navbar">
+            <nav class="navbar container">
+                <i class="fa-solid fa-bars"></i>
+                <ul class="menu">
+                    <li><a href="{{ url_for('novedades') }}">Novedades y destacados</a></li>
+                    <li><a href="{{ url_for('mujer') }}">Mujer</a></li>
+                    <li><a href="{{ url_for('hombre') }}">Hombre</a></li>
+                    <li><a href="{{ url_for('niños') }}">Niño/a</a></li>
+                    <li><a href="{{ url_for('ofertas') }}">Ofertas</a></li>
+                </ul>
+                <form class="search-form">
+                    <input type="search" placeholder="Buscar..." />
+                    <button class="btn-search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </nav>
+        </div>
+    </header>
+    <section class="banner">
+        <div class="content-banner">
+            <p>Calzado SAS</p>
+            <h2>100% Cuero <br />Excelente Calidad</h2>
+            <a href="#">Comprar ahora</a>
+        </div>
+        <main class="main-content">
+            <section class="container container-features">
+                <div class="card-feature">
+                    <i class="fa-solid fa-plane-up"></i>
+                    <div class="feature-content">
+                        <span>Envío gratuito a nivel mundial</span>
+                        <p>En pedido superior a $150</p>
+                    </div>
+                </div>
+                <div class="card-feature">
+                    <i class="fa-solid fa-wallet"></i>
+                    <div class="feature-content">
+                        <span>Contrareembolso</span>
+                        <p>100% garantía de devolución de dinero</p>
+                    </div>
+                </div>
+                <div class="card-feature">
+                    <i class="fa-solid fa-gift"></i>
+                    <div class="feature-content">
+                        <span>Tarjeta regalo especial</span>
+                        <p>Ofrece bonos especiales con regalo</p>
+                    </div>
+                </div>
+                <div class="card-feature">
+                    <i class="fa-solid fa-headset"></i>
+                    <div class="feature-content">
+                        <span>Servicio al cliente 24/7</span>
+                        <p>LLámenos 601-420-214</p>
+                    </div>
+                </div>
+            </section>
+            <section class="container top-categories">
+                <h1 class="heading-1">Cónocenos</h1>
+                <div class="container-categories">
+                    <div style="text-align: center;" class="card-category category-moca">
+                        <p>Hecho en colombia <br>💛💙❤️</p>
+                        <span>Ver más</span>
+                    </div>
+                    <div class="card-category category-expreso">
+                        <p>Productos de calidad</p>
+                        <span>Ver más</span>
+                    </div>
+                    <div class="card-category category-capuchino">
+                        <p>Garantías y Pagos Seguros</p>
+                        <span>Ver más</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="container top-products">
+                <h1 class="heading-1">Más Vendidos</h1>
+
+                <div class="container-options">
+                    <span class="active">Destacados</span>
+                    <span>Más recientes</span>
+                    <span>Más solicitados</span>
+                </div>
+
+                <div class="container-products">
+                    {% for producto in productos %}
+                    <div class="card-product">
+                        <form method="POST" action="{{ url_for('agregar_al_carrito') }}">
+
+                            <!-- Imagen del producto -->
+                            <div class="container-img">
+                                <a href="#">
+                                    <img src="{{ url_for('static', filename='img/' + producto.imagen) }}"
+                                        alt="{{ producto.nombre_producto }}">
+                                </a>
+                                <div class="button-group">
+                                    <span><i class="fa-regular fa-eye"></i></span>
+                                    <span><i class="fa-regular fa-heart"></i></span>
+                                    <span><i class="fa-solid fa-code-compare"></i></span>
+                                </div>
+                            </div>
+
+                            <!-- Información del producto -->
+                            <div class="content-card-product">
+                                <span class="category">{{ producto.descripcion_categoria }}</span>
+                                <h3 class="product-title">
+                                    <a href="#">{{ producto.nombre_producto }}</a>
+                                </h3>
+                                <ul class="stars">
+                                    <li><i class="fa-solid fa-star"></i></li>
+                                    <li><i class="fa-solid fa-star"></i></li>
+                                    <li><i class="fa-solid fa-star"></i></li>
+                                    <li><i class="fa-solid fa-star"></i></li>
+                                    <li><i class="fa-regular fa-star"></i></li>
+                                </ul>
+                                <p class="price">$ {{ producto.precio }}</p>
+                            </div>
+
+                            <!-- Campos ocultos -->
+                            <input type="hidden" name="id" value="{{ producto.id_producto }}">
+                            <input type="hidden" name="nombre" value="{{ producto.nombre_producto }}">
+                            <input type="hidden" name="precio" value="{{ producto.precio }}">
+                            <input type="hidden" name="imagen" value="{{ producto.imagen }}">
+
+                            <!-- Agregar al carrito -->
+                            <div class="add-to-cart">
+                                <input type="number" name="cantidad" value="1" min="1" class="product-quantity" />
+                                <button type="submit" class="btn-cart">
+                                    <i class="fa-solid fa-basket-shopping"></i> Agregar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+                <section class="container blogs">
+                    <h1 class="head ing-1">Últimos lanzamientos</h1>
+                    <div class="container-blogs">
+                        <div class="card-blog">
+                            <div class="container-img">
+                                <img src="{{ url_for('static', filename='img/portada13.jpg') }}" />
+                                <div class="button-group-blog">
+                                    <span>
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </span>
+                                    <span>
+                                        <i class="fa-solid fa-link"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="content-blog">
+                                <h3>Tenis escolares</h3>
+                                <p>
+                                    Estos tenis escolares blancos están diseñados para brindar comodidad y
+                                    estilo en
+                                    el día a día de los estudiantes. Fabricados con 100% cuero de alta calidad,
+                                    ofrecen una durabilidad excepcional y un acabado limpio y pulcro ideal para
+                                    uniformes escolares.
+                                </p>
+                                <div class="btn-read-more">Leer más</div>
+                            </div>
+                        </div>
+                        <div class="card-blog">
+                            <div class="container-img">
+                                <img src="{{ url_for('static', filename='img/portada14.jpg') }}" />
+                                <div class="button-group-blog">
+                                    <span>
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </span>
+                                    <span>
+                                        <i class="fa-solid fa-link"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="content-blog">
+                                <h3>Zapato Jardinera</h3>
+                                <p>
+                                    Nuestros zapatos de jardinera de cuero para niña son el complemento ideal
+                                    para
+                                    el look diario de las más pequeñas. Fabricados en cuero suave y resistente,
+                                    estos zapatos combinan un estilo clásico con una excelente durabilidad.
+                                </p>
+                                <div class="btn-read-more">Leer más</div>
+                            </div>
+                        </div>
+                        <div class="card-blog">
+                            <div class="container-img">
+                                <img src="{{ url_for('static', filename='img/portada15.jpg') }}" />
+                                <div class="button-group-blog">
+                                    <span>
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </span>
+                                    <span>
+                                        <i class="fa-solid fa-link"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="content-blog">
+                                <h3>Estilo mafalda</h3>
+                                <p>
+                                    Estos zapatos de jardinera para niña están hechos de 100% cuero auténtico,
+                                    diseñados para aportar tanto comodidad como elegancia en cualquier ocasión.
+                                    Su
+                                    diseño clásico con hebilla ajustable asegura un ajuste perfecto y seguro,
+                                    mientras que la plantilla acolchada y la suela antideslizante brindan
+                                    confort y
+                                    estabilidad en cada paso.
+                                </p>
+                                <div class="btn-read-more">Leer más</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+        </main>
+
+        <footer class="footer">
+            <div class="container container-footer">
+                <div class="menu-footer">
+                    <div class="contact-info">
+                        <p class="title-footer">Información de Contacto</p>
+                        <ul>
+                            <li>
+                                Dirección: Carrera 110 # 29-15 Bogotá, Colombia.
+                            </li>
+                            <li>Teléfono: 601-420-214</li>
+                            <li>EmaiL: calzadosas21@gmail.com</li>
+                        </ul>
+                        <div class="social-icons">
+                            <span class="facebook">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </span>
+                            <span class="twitter">
+                                <i class="fa-brands fa-twitter"></i>
+                            </span>
+                            <span class="youtube">
+                                <i class="fa-brands fa-youtube"></i>
+                            </span>
+                            <span class="pinterest">
+                                <i class="fa-brands fa-pinterest-p"></i>
+                            </span>
+                            <span class="instagram">
+                                <i class="fa-brands fa-instagram"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="information">
+                        <p class="title-footer">Información</p>
+                        <ul>
+                            <li><a href="#">Acerca de Nosotros</a></li>
+                            <li><a href="#">Información Delivery</a></li>
+                            <li><a href="#">Politicas de Privacidad</a></li>
+                            <li><a href="#">Términos y condiciones</a></li>
+                            <li><a href="#">Contactános</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="my-account">
+                        <p class="title-footer">Mi cuenta</p>
+
+                        <ul>
+                            <li><a href="#">Mi cuenta</a></li>
+                            <li><a href="#">Historial de ordenes</a></li>
+                            <li><a href="#">Lista de deseos</a></li>
+                            <li><a href="#">Boletín</a></li>
+                            <li><a href="#">Reembolsos</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="newsletter">
+                        <p class="title-footer">Boletín informativo</p>
+
+                        <div class="content">
+                            <p>
+                                Suscríbete a nuestros boletines ahora y mantente al
+                                día con nuevas colecciones y ofertas exclusivas.
+                            </p>
+                            <input type="email" placeholder="Ingresa el correo aquí...">
+                            <button>Suscríbete</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="copyright">
+                    <p>
+                        Desarrollado por Zharick Stephanie López Tribiño &copy; 2024
+                    </p>
+
+                    <img src="{{ url_for('static', filename='img/credito.jpg') }}">
+                </div>
+            </div>
+        </footer>
+</body>
+
+</html>

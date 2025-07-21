@@ -27,7 +27,11 @@
                 <div class="name-usuario">
                     <h3>Bienvenido, {{ current_user.nombre }}</h3>
                 </div>
-                <a href="#" class="active">
+                <a href="{{ url_for('index_usuario') }}" class="active">
+                    <span class="material-symbols-outlined">home</span>
+                    <h3>Inicio</h3>
+                </a>
+                <a href="#" >
                     <span class="material-symbols-outlined">shopping_cart</span>
                     <h3>Carrito de Compras</h3>
                 </a>

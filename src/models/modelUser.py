@@ -1,7 +1,9 @@
 from .entities.user import User
 from .entities.rol import Role
 
+
 class ModelUser:
+
     @classmethod
     def login(cls, mysql, correo, contraseña):
         cursor = None

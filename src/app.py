@@ -1,13 +1,19 @@
 import os
 from datetime import datetime
 from random import sample
-from flask import Flask, render_template, request, url_for, redirect, flash, jsonify
+from flask import Flask, render_template, request, url_for, redirect, flash, jsonify, session
 from flask_login import LoginManager, login_required, current_user
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
+from models.modelUser import ModelUser
+from decimal import Decimal
+
+
 
 # --- Crear aplicación Flask ---
 app = Flask(__name__)
+
+
 
 # --- Configuración base de datos MySQL ---
 app.config['MYSQL_HOST'] = 'localhost'
@@ -16,6 +22,101 @@ app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'calzado_sas'
 
 mysql = MySQL(app)
+
+
+@app.route('/index-usuario')
+def index_usuario():
+    try:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("""
+            SELECT p.id_producto, p.nombre_producto, p.precio, p.descripcion, 
+                   p.imagen, c.descripcion_categoria
+            FROM productos p
+            JOIN categoria c ON p.id_categoria = c.id_categoria 
+        """)
+        productos = cursor.fetchall()
+        return render_template('usuario/index_usuario.html', productos=productos)
+    except Exception as e:
+        print("Error al cargar productos:", e)
+        return render_template('usuario/index_usuario.html', productos=[])
+    finally:
+        cursor.close()
+
+@app.route('/add-carrito', methods=['POST'])
+def agregar_al_carrito():
+    id = request.form['id']
+    nombre = request.form['nombre']
+    precio = float(request.form['precio'])
+    imagen = request.form['imagen']
+    cantidad = int(request.form['cantidad'])
+
+    carrito = session.get('carrito', {})
+
+    if id in carrito:
+        carrito[id]['cantidad'] += cantidad
+    else:
+        carrito[id] = {
+            'nombre': nombre,
+            'precio': precio,
+            'imagen': imagen,
+            'cantidad': cantidad
+        }
+
+    session['carrito'] = carrito
+    return redirect(url_for('mostrar_carrito'))
+
+@app.route('/vaciar-carrito', methods=['POST'])
+def vaciar_carrito():
+    session.pop('carrito', None)  # Elimina el carrito de la sesión
+    flash('Carrito vaciado correctamente.')
+    return redirect(url_for('mostrar_carrito')) 
+
+@app.route('/carrito')
+def mostrar_carrito():
+    carrito = session.get('carrito', {})
+    subtotal = sum(item['precio'] * item['cantidad'] for item in carrito.values())
+    return render_template('usuario/car/carrito.html', carrito=carrito, subtotal=subtotal)
+
+@app.route('/actualizar-carrito', methods=['POST'])
+def actualizar_carrito():
+    id_producto = request.form['id_producto']
+    nueva_cantidad = int(request.form['cantidad'])
+
+    if 'carrito' in session and id_producto in session['carrito']:
+        session['carrito'][id_producto]['cantidad'] = nueva_cantidad
+        session.modified = True  # 🔥 Necesario para que se guarde el cambio
+
+    return redirect(url_for('mostrar_carrito'))
+
+
+
+@app.route('/eliminar/<id_producto>', methods=['POST'])
+def eliminar_producto(id_producto):
+    print("ID a eliminar:", id_producto)
+    print("Claves en carrito:", session.get('carrito', {}).keys())
+
+    if 'carrito' in session and id_producto in session['carrito']:
+        session['carrito'].pop(id_producto)
+        session.modified = True  # 🔥 Esto es clave
+        flash('Producto eliminado del carrito.', 'success')
+    else:
+        flash('Producto no encontrado en el carrito.', 'danger')
+
+    return redirect(url_for('mostrar_carrito'))
+
+
+@app.route('/checkout')
+def checkout():
+    carrito = session.get('carrito', {})
+    total = sum(i['precio']*i['cantidad'] for i in carrito.values())
+    return render_template('usuario/car/checkout.html', carrito=carrito, total=total)
+
+@app.route('/procesar_pago', methods=['POST'])
+def procesar_pago():
+    # Aquí guardas pedido en BD y limpias sesión
+    # session.pop('carrito', None)
+    return render_template('usuario/car/gracias.html')  # plantilla de agradecimiento
+
 
 # --- Configuración Flask-Login ---
 app.secret_key = 'ASD234GDFV435GDFGB'
@@ -123,7 +224,7 @@ def eliminarProducto(id_producto, nombre_imagen):
         return 0
 
 @app.route('/registrar-producto')
-@login_required
+
 def registrar_producto():
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT id_categoria, descripcion_categoria FROM Categoria")
@@ -144,8 +245,7 @@ def obtenerCategorias():
         print(f"Error en obtenerCategorias: {e}")
         return []
 
-# --- Flask-Login: cargar usuario ---
-from models.modelUser import ModelUser
+
 
 @login_manager.user_loader
 def load_user(id):
@@ -186,26 +286,27 @@ def login():
     return render_template('auth/login.html')
 
 @app.route('/logout')
-@login_required
+
 def logout():
     from controllers.userController import UserController
     return UserController.logout()
 
 @app.route('/admin')
-@login_required
+
 def admin_dashboard():
-    if current_user.is_admin():
+    if current_user.is_authenticated and current_user.is_admin():
         return render_template('administrador/admin_dashboard.html', miData=listaZapatos())
     flash("Acceso no autorizado.")
-    return redirect(url_for('usuario_dashboard'))
+    return redirect(url_for('login'))
+
 
 @app.route('/registrar-producto', methods=['GET', 'POST'])
-@login_required
+
 def addProducto():
     return render_template('administrador/acciones/add.html', categorias=obtenerCategorias())
 
 @app.route('/form-add-producto', methods=['POST'])
-@login_required
+
 def formAddProducto():
     nombre_producto = request.form['nombre_producto']
     stock = request.form['stock']
@@ -220,7 +321,7 @@ def formAddProducto():
     return redirect(url_for('admin_dashboard'))
 
 @app.route('/ver-detalles-del-zapato/<int:id_producto>')
-@login_required
+
 def verDetalleZapato(id_producto):
     zapato = getZapatoById(id_producto)
     if zapato:
@@ -229,7 +330,7 @@ def verDetalleZapato(id_producto):
     return redirect(url_for('admin_dashboard'))
 
 @app.route('/form-update-producto/<int:id_producto>', methods=['GET', 'POST'])
-@login_required
+
 def formUpdateProducto(id_producto):
     if request.method == 'GET':
         zapato = getZapatoById(id_producto)
@@ -251,7 +352,7 @@ def formUpdateProducto(id_producto):
     return redirect(url_for('admin_dashboard'))
 
 @app.route('/borrar-producto', methods=['POST'])
-@login_required
+
 def formViewBorrarProducto():
     id_producto = request.form['id_producto']
     imagen = request.form['imagen']
@@ -259,13 +360,18 @@ def formViewBorrarProducto():
     return jsonify([1 if resultado == 1 else 0])
 
 @app.route('/usuario')
-@login_required
+
+# ---
 def usuario_dashboard():
-    return render_template('usuario/usuario_dashboard.html')
+    if current_user.is_authenticated and current_user.is_regular_user():
+        return render_template('usuario/usuario_dashboard.html')
+    flash("Acceso no autorizado.")
+    return redirect(url_for('login'))
 
 @app.route('/novedades_destacados')
 def novedades():
     return render_template('novedades.html')
+
 
 @app.route('/categoria_mujer')
 def mujer():
@@ -292,6 +398,21 @@ def error_401(error):
 def error_404(error):
     return "<h1>Página no encontrada</h1>", 404
 
+# --- Rutas protegidas ---
+@app.route('/protected')
+@login_required
+def protected():
+    return "<h1>Esta es una vista protegida, solo para usuarios autenticados.</h1>"
+
+def status_401():
+    return redirect(url_for('login'))
+
+def status_404():
+    return "<h1>Página no encontrada</h1>", 404
+
 # --- Iniciar la aplicación ---
 if __name__ == '__main__':
+    app.register_error_handler(401, error_401)
+    app.register_error_handler(404, error_404)
     app.run(debug=True)
+    

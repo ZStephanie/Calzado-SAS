@@ -78,13 +78,13 @@ html {
 	display: flex;
 	gap: 1rem;
 	cursor: pointer;
+	text-decoration: none; 	
 }
 
 .container-user .fa-user {
 	font-size: 3rem;
 	color: var(#151515);
-	padding-right: 2.5rem;
-	border-right: 1px solid #000000;
+	padding-right: 2.5rem; 	
 }
 
 .container-user .fa-basket-shopping {
@@ -498,6 +498,132 @@ html {
 	margin-bottom: 1rem;
 	cursor: pointer;
 }
+
+.container-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+.card-product {
+    background-color: #fff;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-product:hover {
+    transform: scale(1.02);
+}
+
+.container-img {
+    position: relative;
+    overflow: hidden;
+}
+
+.container-img img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.container-img:hover img {
+    transform: scale(1.1);
+}
+
+.button-group {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.button-group span {
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.content-card-product {
+    padding: 1rem;
+}
+
+.category {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 0.3rem;
+}
+
+.product-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 0.3rem;
+}
+
+.product-title a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.stars {
+    list-style: none;
+    padding: 0;
+    margin: 0.3rem 0;
+    display: flex;
+    gap: 4px;
+    color: #f5a623;
+}
+
+.price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.add-to-cart {
+    margin-top: auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-quantity {
+    width: 60px;
+    padding: 0.3rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn-cart {
+    background-color: #34495e;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cart:hover {
+    background-color: #2c3e50;
+}
+
 
 .content-card-product h3:hover {
 	color: var(--primary-color);
